@@ -1,0 +1,9 @@
+{
+  "name": "chart-prepared",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Group trip decision tool: one link, everyone's preferences, three options, one locked decision.",
+  "scripts": { "test": "node --test test/*.test.js" },
+  "engines": { "node": ">=18" }
+}

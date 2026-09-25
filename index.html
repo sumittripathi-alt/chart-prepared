@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chart Prepared · plan one group trip</title>
+<meta name="description" content="Everyone answers once. Get three trip options, see where each person stands, and lock one decision.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧳</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Nunito:wght@400;600;700;800&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+/* Vaporwave + glass design system (palette, gradients, type and motion from the vaporwave-glassomorphic skill) */
+:root{
+  --pink:#FFAFEF; --blue:#7DE0FF; --purple:#B595FF; --mint:#ABFFE3; --hot:#FF3BAE; --cyan:#00EDFF;
+  --bg1:#1A0B3B; --bg2:#3B0F5C; --bg3:#0B1D4A;
+  --ink:#F7F1FF; --soft:#CDBFEA; --glass:rgba(255,255,255,.09); --glass-strong:rgba(255,255,255,.14); --edge:rgba(255,255,255,.22);
+  --field:rgba(10,4,30,.45); --great:var(--mint); --ok:var(--blue); --stretch:#FF8AC9;
+  --btn-ink:#1A0B3B; --radius:18px;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){ :root:not([data-theme="dark"]){
+  --bg1:#FFE3F7; --bg2:#E4DAFF; --bg3:#D6F6FF; --ink:#24104A; --soft:#5B4A7E;
+  --glass:rgba(255,255,255,.55); --glass-strong:rgba(255,255,255,.72); --edge:rgba(120,80,200,.25); --field:rgba(255,255,255,.7);
+  --great:#0B7A5A; --ok:#0B5F8A; --stretch:#B0126A; color-scheme:light;
+}}
+:root[data-theme="light"]{ --bg1:#FFE3F7; --bg2:#E4DAFF; --bg3:#D6F6FF; --ink:#24104A; --soft:#5B4A7E;
+  --glass:rgba(255,255,255,.55); --glass-strong:rgba(255,255,255,.72); --edge:rgba(120,80,200,.25); --field:rgba(255,255,255,.7);
+  --great:#0B7A5A; --ok:#0B5F8A; --stretch:#B0126A; color-scheme:light; }
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px); -webkit-text-size-adjust:100%; min-height:100%}
+body{margin:0; min-height:100vh; color:var(--ink); font-family:Nunito,"SF Pro Rounded",ui-rounded,system-ui,sans-serif; font-size:17px; line-height:1.55; font-weight:600;
+  background:var(--bg1) linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 55%,var(--bg3) 100%) fixed}
+/* Twilight Zone glow blobs + perspective grid horizon */
+body::before{content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
+  background:radial-gradient(40vmax 30vmax at 85% 8%,color-mix(in srgb,var(--hot) 35%,transparent),transparent 70%),
+             radial-gradient(38vmax 30vmax at 5% 40%,color-mix(in srgb,var(--cyan) 22%,transparent),transparent 70%),
+             radial-gradient(30vmax 24vmax at 60% 85%,color-mix(in srgb,var(--purple) 35%,transparent),transparent 70%)}
+body::after{content:""; position:fixed; left:-50%; right:-50%; bottom:0; height:38vh; pointer-events:none; z-index:-1; opacity:.35;
+  background-image:linear-gradient(color-mix(in srgb,var(--pink) 70%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--pink) 70%,transparent) 1px,transparent 1px);
+  background-size:48px 48px; transform:perspective(320px) rotateX(62deg); transform-origin:bottom;
+  mask-image:linear-gradient(to top,#000 10%,transparent 90%); -webkit-mask-image:linear-gradient(to top,#000 10%,transparent 90%)}
+main{max-width:680px; margin:0 auto; padding:24px 18px 72px}
+h1,h2,h3{font-family:Unbounded,"Arial Black",system-ui,sans-serif; line-height:1.08; margin:0; font-weight:900; letter-spacing:.01em}
+h1{font-size:clamp(2rem,8vw,3.1rem); background:linear-gradient(95deg,var(--pink),#FFC39A 45%,var(--purple)); -webkit-background-clip:text; background-clip:text; color:transparent}
+:root[data-theme="light"] h1{background:linear-gradient(95deg,var(--hot),#8A3FFF); -webkit-background-clip:text; background-clip:text}
+@media (prefers-color-scheme:light){ :root:not([data-theme="dark"]) h1{background:linear-gradient(95deg,var(--hot),#8A3FFF); -webkit-background-clip:text; background-clip:text} }
+h2{font-size:1.45rem; font-weight:700} h3{font-size:1.15rem; font-weight:700}
+p{margin:.5em 0; max-width:60ch}
+.lede{font-size:1.1rem; color:var(--soft)}
+.brand{display:inline-flex; align-items:center; gap:10px; font-family:Unbounded,system-ui,sans-serif; font-weight:700; font-size:.95rem; margin-bottom:28px; color:var(--ink); text-decoration:none; padding:8px 14px 8px 10px; border-radius:999px; background:var(--glass); border:1px solid var(--edge); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px)}
+.brand i{width:14px; height:14px; border-radius:50%; background:linear-gradient(135deg,var(--hot),var(--cyan)); box-shadow:0 0 12px var(--hot)}
+section{margin-top:28px}
+.sheet,.opt,.chartwrap,.note{background:var(--glass); border:1px solid var(--edge); backdrop-filter:blur(20px) saturate(140%); -webkit-backdrop-filter:blur(20px) saturate(140%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 12px 40px rgba(20,0,60,.25)}
+.sheet{border-radius:var(--radius); padding:20px}
+label{display:block; font-weight:800; margin:16px 0 6px}
+.hint{font-size:.9rem; color:var(--soft); font-weight:600}
+input[type=text],input[type=number],input[type=date],select{width:100%; font:inherit; padding:12px 14px; border:1px solid var(--edge); border-radius:12px; background:var(--field); color:var(--ink)}
+select option{color:#1A0B3B}
+input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--cyan); outline-offset:2px}
+.row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+button{font:inherit; cursor:pointer}
+.btn{display:inline-block; border-radius:999px; background:var(--glass-strong); color:var(--ink); border:1px solid var(--edge); padding:13px 22px; font-weight:800; text-decoration:none; transition:transform .1s ease, box-shadow .2s ease}
+.btn.signal{background:linear-gradient(95deg,var(--pink),var(--blue)); color:var(--btn-ink); border:0; box-shadow:0 0 22px color-mix(in srgb,var(--hot) 45%,transparent)}
+.btn.ghost{background:transparent}
+.btn:active{transform:scale(.97)}
+.btn[disabled]{opacity:.5; cursor:not-allowed}
+.actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:20px}
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{border:1px solid var(--edge); background:var(--field); color:var(--ink); padding:8px 14px; border-radius:999px; font-size:.95rem; font-weight:700; transition:background .15s ease}
+.chip[aria-pressed="true"]{background:linear-gradient(95deg,var(--pink),var(--purple)); color:var(--btn-ink); border-color:transparent}
+.status{display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center; margin-top:14px}
+.status b{font-family:Unbounded,system-ui,sans-serif; font-size:1.1rem}
+.who{display:inline-flex; align-items:center; gap:6px; font-size:.95rem}
+.dot{width:10px; height:10px; border-radius:50%; border:2px solid var(--soft)}
+.dot.on{background:var(--great); border-color:var(--great); box-shadow:0 0 8px var(--great)}
+.bar{height:8px; background:var(--field); border:1px solid var(--edge); border-radius:99px; overflow:hidden; margin-top:10px}
+.bar span{display:block; height:100%; background:linear-gradient(90deg,var(--mint),var(--cyan)); border-radius:99px}
+.seg{display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--edge); border-radius:999px; overflow:hidden; background:var(--field)}
+.seg button{border:0; background:transparent; color:var(--ink); padding:8px 4px; font-size:.9rem; font-weight:700}
+.seg button[aria-pressed="true"]{background:linear-gradient(95deg,var(--pink),var(--purple)); color:var(--btn-ink)}
+.typerow{display:grid; grid-template-columns:7.5rem 1fr; align-items:center; gap:10px; margin:8px 0}
+.month{font-family:"Space Mono",ui-monospace,monospace; margin:14px 0 6px; font-size:.85rem; color:var(--soft)}
+.win{display:flex; align-items:center; gap:10px; padding:9px 12px; border:1px solid var(--edge); border-radius:12px; margin:6px 0; background:var(--field); font-weight:700}
+.win input{width:20px; height:20px; accent-color:var(--hot)}
+.win .k{margin-left:auto; font-size:.8rem; color:var(--soft); font-weight:600}
+.check{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-weight:600}
+.check input{width:20px; height:20px; margin-top:2px; accent-color:var(--hot)}
+.note{border-radius:14px; padding:10px 14px; margin:14px 0; font-size:.95rem; border-left:4px solid var(--hot)}
+.note a{color:var(--ok)}
+.err{color:var(--stretch); font-weight:800; min-height:1.5em}
+
+/* the chart: people × options */
+.chartwrap{overflow-x:auto; margin-top:12px; border-radius:var(--radius)}
+table.chart{border-collapse:collapse; width:100%; min-width:330px; font-size:.92rem}
+.chart th,.chart td{border-bottom:1px solid var(--edge); padding:9px 8px; text-align:left; vertical-align:top}
+.chart th+th,.chart td,.chart th+td{border-left:1px solid color-mix(in srgb,var(--edge) 60%,transparent)}
+.chart thead th{font-family:Unbounded,system-ui,sans-serif; font-weight:700; font-size:.8rem; hyphens:auto; background:var(--glass)}
+.chart thead th small{display:block; font-family:"Space Mono",ui-monospace,monospace; font-weight:400; color:var(--soft); font-size:.72rem; margin-top:3px}
+.chart tbody th{font-weight:800; white-space:nowrap}
+.fit{font-weight:800}
+.fit.Great{color:var(--great); background:color-mix(in srgb,var(--mint) 14%,transparent)}
+.fit.OK{color:var(--ok); background:color-mix(in srgb,var(--blue) 14%,transparent)}
+.fit.Stretch{color:var(--stretch); background:color-mix(in srgb,var(--hot) 16%,transparent)}
+.fit small{display:block; font-family:"Space Mono",ui-monospace,monospace; font-weight:400; color:var(--ink); opacity:.85; font-size:.75rem}
+.chart .chosen{box-shadow:inset 0 0 0 2px var(--cyan), inset 0 0 18px color-mix(in srgb,var(--cyan) 30%,transparent)}
+.chart caption{color:var(--soft)}
+
+.opt{margin-top:18px; padding:18px; border-radius:var(--radius)}
+.opt .head{display:flex; gap:14px; align-items:baseline}
+.opt .rank{font-family:Unbounded,system-ui,sans-serif; font-weight:900; font-size:2.2rem; line-height:1; background:linear-gradient(180deg,var(--pink),var(--purple)); -webkit-background-clip:text; background-clip:text; color:transparent}
+.facts{display:flex; flex-wrap:wrap; gap:4px 16px; color:var(--soft); margin-top:6px; font-size:.92rem}
+.tag{display:inline-block; font-family:"Space Mono",ui-monospace,monospace; font-size:.72rem; padding:3px 10px; border-radius:999px; border:1px solid var(--edge); color:var(--soft); background:var(--field)}
+.price{font-family:Unbounded,system-ui,sans-serif; font-weight:700; font-size:1.3rem; margin-top:10px}
+.price .hint{font-family:Nunito,system-ui,sans-serif}
+.people{margin:12px 0 0; padding:0; list-style:none}
+.people li{display:grid; grid-template-columns:6.5rem 4.5rem 1fr; gap:8px; padding:8px 0; border-bottom:1px dashed var(--edge); font-size:.93rem}
+.people .l{font-weight:800}
+.l.Great{color:var(--great)} .l.OK{color:var(--ok)} .l.Stretch{color:var(--stretch)}
+.votes{font-size:.9rem; color:var(--soft); margin-top:8px}
+
+.stamp{display:inline-block; border:3px solid var(--hot); color:var(--pink); padding:14px 20px 10px; border-radius:18px; font-family:Unbounded,system-ui,sans-serif; font-weight:900; font-size:clamp(1.7rem,8vw,2.6rem); line-height:1;
+  background:var(--glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  text-shadow:0 0 12px var(--hot),0 0 28px var(--hot); box-shadow:0 0 24px color-mix(in srgb,var(--hot) 55%,transparent), inset 0 0 18px color-mix(in srgb,var(--hot) 35%,transparent)}
+.stamp small{display:block; margin-top:8px; font-family:"Space Mono",ui-monospace,monospace; font-size:.8rem; font-weight:400; text-shadow:none; color:var(--ink)}
+@media (prefers-reduced-motion:no-preference){ .stamp{animation:glowin .8s cubic-bezier(.3,1.5,.5,1) both} @keyframes glowin{from{transform:scale(1.4); opacity:0; filter:blur(8px)} to{transform:scale(1); opacity:1; filter:none}} }
+.links input{font-size:.9rem}
+details summary{cursor:pointer}
+.history{font-size:.88rem; color:var(--soft); padding-left:18px}
+footer{margin-top:48px; font-size:.85rem; color:var(--soft)}
+@media (max-width:460px){ .row{grid-template-columns:1fr} .people li{grid-template-columns:5.5rem 4rem 1fr} }
+
+/* ── Fun layer ─────────────────────────────── */
+.van{width:100%; height:auto; display:block; color:var(--soft); overflow:visible}
+.van .wheel,.van .bag,.van .vanbody,.van .cloud,.van .bird,.van .rays,.van .sunwrap{transform-box:fill-box; transform-origin:center}
+.van .speed{opacity:0}
+.van .vanbody{animation:bob 2.6s ease-in-out infinite}
+.van .cloud.c1{animation:drift 9s ease-in-out infinite alternate}
+.van .cloud.c2{animation:drift 12s ease-in-out -4s infinite alternate-reverse}
+.van .bird{animation:flap .5s ease-in-out infinite alternate}
+.van .bird.b2{animation-delay:-.25s}
+.van .rays{animation:turn 30s linear infinite}
+.van.moving .wheel{animation:spin .55s linear infinite}
+.van.moving .road{animation:road .45s linear infinite}
+.van.moving .vanbody{animation:bob .45s ease-in-out infinite}
+.van.moving .speed{opacity:1; animation:whoosh .45s ease-in-out infinite alternate}
+.van.moving .cloud{animation-duration:2.4s}
+.van .bag.on.fresh{animation:drop .7s cubic-bezier(.3,1.7,.5,1) var(--d) both}
+.van.hero .vanbody{animation:drivein 1.3s cubic-bezier(.2,.9,.3,1.1) both, bob 2.6s ease-in-out 1.3s infinite}
+.van.hero .wheel{animation:spin .5s linear 0s 2.6}
+.van.stuck .vanbody{animation:sulk 2.4s ease-in-out infinite}
+.van.stuck .wheel:last-of-type{animation:wobble 1.2s ease-in-out infinite}
+.van.leave .vanbody,.van.leave .wheel,.van.leave .speed{animation:zoomoff 1.2s cubic-bezier(.6,-0.3,.7,.4) forwards}
+.van.leave .speed{opacity:1}
+@keyframes bob{50%{transform:translateY(-3px)}}
+@keyframes drift{to{transform:translateX(-26px)}}
+@keyframes flap{to{transform:scaleY(.55)}}
+@keyframes turn{to{transform:rotate(360deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes road{to{stroke-dashoffset:-34}}
+@keyframes whoosh{to{transform:translateX(-8px); opacity:.4}}
+@keyframes drop{from{transform:translateY(-46px) rotate(-12deg); opacity:0}}
+@keyframes drivein{from{transform:translateX(-340px)} 75%{transform:translateX(10px)}}
+@keyframes sulk{50%{transform:translateY(2px) rotate(-1.5deg)}}
+@keyframes wobble{50%{transform:translateY(3px) scaleY(.9)}}
+@keyframes zoomoff{20%{transform:translateX(-14px)} to{transform:translateX(420px)}}
+
+.hero-art{max-width:460px; margin:-8px 0 10px -6px}
+.rack{display:grid; grid-template-columns:minmax(0,190px) 1fr; gap:14px; align-items:center; margin-top:10px}
+.rack p{margin:0}
+
+.loader{position:fixed; inset:0; z-index:50; display:grid; place-items:center; padding:24px; background:color-mix(in srgb,var(--bg1) 55%,transparent); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); opacity:0; pointer-events:none; transition:opacity .2s ease}
+.loader.show{opacity:1; pointer-events:auto}
+.loader-card{width:min(360px,100%); text-align:center; padding:18px 20px 22px; border-radius:24px; background:var(--glass-strong); border:1px solid var(--edge); box-shadow:0 20px 60px rgba(20,0,60,.4)}
+.loader-line{font-family:Unbounded,system-ui,sans-serif; font-weight:700; font-size:1.02rem; margin:6px auto 0; min-height:2.6em}
+.loader-line.swap{animation:swapin .35s ease both}
+@keyframes swapin{from{opacity:0; transform:translateY(8px)}}
+
+.confetti{position:fixed; width:8px; height:13px; border-radius:2px; pointer-events:none; z-index:60}
+
+.nudge{position:relative; overflow:hidden; border-radius:var(--radius); padding:18px 18px 16px 18px; margin-top:22px; background:linear-gradient(120deg,color-mix(in srgb,var(--hot) 30%,transparent),color-mix(in srgb,var(--purple) 25%,transparent)); border:1px solid var(--edge)}
+.nudge h2{font-size:1.35rem}
+.nudge .wag{display:inline-block; animation:wag 1s ease-in-out infinite; transform-origin:70% 80%}
+.nudge .quip{font-style:italic; min-height:3em; margin-top:10px; color:var(--ink)}
+.nudge .quip.swap{animation:swapin .4s ease both}
+@keyframes wag{50%{transform:rotate(-18deg)}}
+
+.packing{position:sticky; top:env(safe-area-inset-top,0px); z-index:5; margin:-20px -20px 16px; padding:12px 20px; border-radius:var(--radius) var(--radius) 0 0; background:var(--glass-strong); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid var(--edge)}
+.packing .track{position:relative; height:10px; border-radius:99px; background:var(--field); border:1px solid var(--edge); margin-top:6px}
+.packing .fill{position:absolute; inset:0 auto 0 0; border-radius:99px; background:linear-gradient(90deg,var(--mint),var(--cyan),var(--pink)); transition:width .45s cubic-bezier(.3,1.4,.5,1)}
+.packing .bagicon{position:absolute; top:-14px; font-size:20px; transform:translateX(-50%); transition:left .45s cubic-bezier(.3,1.4,.5,1)}
+.packing .msg{font-size:.9rem; font-weight:800}
+
+.chip[aria-pressed="true"],.seg button[aria-pressed="true"]{animation:pop .32s cubic-bezier(.3,1.9,.5,1)}
+@keyframes pop{40%{transform:scale(1.12)}}
+.win:has(input:checked){border-color:var(--pink); background:color-mix(in srgb,var(--pink) 14%,var(--field))}
+.win:has(input:checked) .k{color:var(--ink)}
+
+.enter .chart tbody td,.enter .chart tbody th{animation:cellin .45s cubic-bezier(.3,1.5,.5,1) both; animation-delay:calc(var(--i,0) * 45ms)}
+.enter .opt{animation:rise .6s cubic-bezier(.2,.9,.3,1.1) both; animation-delay:calc(var(--o,0) * 120ms + 300ms)}
+.enter .opt .rank{animation:flipin .6s ease both; animation-delay:calc(var(--o,0) * 120ms + 450ms)}
+@keyframes cellin{from{opacity:0; transform:scale(.7)}}
+@keyframes rise{from{opacity:0; transform:translateY(24px)}}
+@keyframes flipin{from{transform:rotateX(90deg); opacity:0}}
+.btn.signal:hover{box-shadow:0 0 32px color-mix(in srgb,var(--hot) 65%,transparent)}
+.btn.voted{animation:pop .4s cubic-bezier(.3,1.9,.5,1)}
+.bar span{transition:width .8s cubic-bezier(.3,1.3,.5,1)}
+.dot:not(.on){animation:pending 1.6s ease-in-out infinite}
+@keyframes pending{50%{border-color:var(--hot); box-shadow:0 0 8px var(--hot)}}
+.nextstop{margin-top:18px; max-width:420px}
+
+/* Accessibility fallbacks: solid surfaces when transparency is reduced, no motion when reduced */
+@media (prefers-reduced-transparency:reduce){
+  .sheet,.opt,.chartwrap,.note,.brand,.stamp{backdrop-filter:none; -webkit-backdrop-filter:none; background:var(--bg1)}
+  body::before,body::after{display:none}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+@media (forced-colors:active){ h1,.opt .rank{color:CanvasText; background:none} }
+</style>
+</head>
+<body>
+<main id="app" aria-live="polite"><p>Loading…</p></main>
+
+<script type="module">
+import { rank } from "./lib/engine.js";
+import { ORIGINS, TRIP_TYPES, TIERS, TIER_LABEL, HARD_NOS, DESTINATIONS, PRICES_UPDATED } from "./lib/data.js";
+import { demoTrip } from "./lib/demo.js";
+import { van, withLoader, confetti, NUDGES, nudgeHeadline, reduceMotion } from "./fun.js";
+
+const $ = (s, r = document) => r.querySelector(s);
+const app = $("#app");
+const qs = new URLSearchParams(location.search);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const inr = (n) => "₹" + Number(n).toLocaleString("en-IN");
+const k = (n) => "₹" + (n / 1000).toFixed(n % 1000 ? 1 : 0) + "k";
+const store = { get(key) { try { return localStorage.getItem(key); } catch { return null; } }, set(key, v) { try { localStorage.setItem(key, v); } catch {} } };
+const brand = `<a class="brand" href="/"><i aria-hidden="true"></i>Chart Prepared</a>`;
+const footer = `<footer>Prices are typical averages as of ${PRICES_UPDATED}, not live fares. Check real prices once the group has picked.</footer>`;
+const TYPE_LABEL = { beach: "Beach", mountains: "Mountains", heritage: "Heritage", spiritual: "Spiritual", adventure: "Adventure", nightlife: "Nightlife" };
+
+async function api(body, ctx = body.action) {
+  return ctx ? withLoader(ctx, () => rawApi(body)) : rawApi(body);
+}
+async function rawApi(body) {
+  const r = await fetch("/api/trip", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ k: (typeof adminKey === "function" && qs.get("t")) ? adminKey() : undefined, ...body }) });
+  const j = await r.json().catch(() => ({ error: "The server didn't respond properly." }));
+  if (!r.ok) throw new Error(j.error || "Request failed.");
+  return j;
+}
+
+// ─── Home ───────────────────────────────────────────────
+function home() {
+  const names = ["Riya", "Siddharth", "Karan", "Aisha", "Preethi"];
+  const dl = new Date(Date.now() + 3 * 864e5).toISOString().slice(0, 10);
+  app.innerHTML = `${brand}
+  <div class="hero-art">${van({ bags: names.map((n) => ({ on: true, fresh: true, name: n })), cls: "hero", label: "A van with five bags on the roof, ready for a trip" })}</div>
+  <h1>One link. Everyone answers once. One trip gets decided.</h1>
+  <p class="lede">Each friend adds their budget, free dates, the kind of trip they want and their hard no's. You get three options, see where each person stands on each, vote, and lock it.</p>
+  <div class="actions"><a class="btn ghost" href="/?demo=1">See it with sample answers</a></div>
+  <section class="sheet">
+    <h2>Start a trip</h2>
+    <label for="tn">Trip name</label><input id="tn" type="text" value="College gang trip" maxlength="60">
+    <label>Who's going <span class="hint">· one name per box</span></label>
+    <div id="names">${names.map((n) => `<input type="text" value="${n}" maxlength="30" style="margin-bottom:8px">`).join("")}</div>
+    <button class="btn ghost" id="addp" type="button">Add a person</button>
+    <div class="row">
+      <div><label for="nights">Nights away</label><select id="nights"><option>2</option><option selected>3</option><option>4</option></select></div>
+      <div><label for="weeks">Look ahead</label><select id="weeks"><option value="6">6 weeks</option><option value="10" selected>10 weeks</option><option value="14">14 weeks</option></select></div>
+    </div>
+    <label for="dl">Answer by <span class="hint">· shown to everyone</span></label><input id="dl" type="date" value="${dl}">
+    <p class="err" id="err"></p>
+    <button class="btn signal" id="create">Create trip link</button>
+  </section>${footer}`;
+  $("#addp").onclick = () => $("#names").insertAdjacentHTML("beforeend", `<input type="text" maxlength="30" style="margin-bottom:8px" placeholder="Name">`);
+  $("#create").onclick = async (e) => {
+    e.target.disabled = true; $("#err").textContent = "";
+    try {
+      const r = await api({ action: "create", name: $("#tn").value, participants: [...$("#names").querySelectorAll("input")].map((i) => i.value), nights: $("#nights").value, weeks: $("#weeks").value, deadline: $("#dl").value });
+      store.set(`admin:${r.id}`, r.adminToken);
+      location.href = `/?t=${r.id}&k=${r.adminToken}&new=1`;
+    } catch (err) { $("#err").textContent = err.message; e.target.disabled = false; }
+  };
+}
+
+const shortDates = (w) => { const f = (x) => new Date(x + "T00:00:00Z"); const a = f(w.start), b = f(w.end); const m = (d) => d.toLocaleString("en-IN", { month: "short", timeZone: "UTC" }); return a.getUTCMonth() === b.getUTCMonth() ? `${a.getUTCDate()}–${b.getUTCDate()} ${m(b)}` : `${a.getUTCDate()} ${m(a)}–${b.getUTCDate()} ${m(b)}`; };
+// ─── Shared: results rendering ──────────────────────────
+function renderChart(result, decisionId) {
+  const opts = result.options;
+  const names = opts[0].people.map((p) => p.name);
+  return `<div class="chartwrap"><table class="chart">
+    <caption class="hint" style="caption-side:bottom;text-align:left;padding:8px 10px">Where each person stands on each option</caption>
+    <thead><tr><th scope="col"></th>${opts.map((o, i) => `<th scope="col" class="${o.id === decisionId ? "chosen" : ""}">${i + 1}. ${esc(o.destination)}<small>${esc(shortDates(o.window))}</small></th>`).join("")}</tr></thead>
+    <tbody>${names.map((n, r) => `<tr><th scope="row" style="--i:${r * 4}">${esc(n)}</th>${opts.map((o, c) => { const p = o.people.find((x) => x.name === n); return `<td style="--i:${r * 4 + c + 1}" class="fit ${p.label} ${o.id === decisionId ? "chosen" : ""}">${p.label}<small>${k(p.cost)}</small></td>`; }).join("")}</tr>`).join("")}</tbody>
+  </table></div>`;
+}
+
+function renderOption(o, i, extra = "") {
+  return `<article class="opt" id="${o.id}" style="--o:${i}">
+    <div class="head"><span class="rank" aria-hidden="true">${i + 1}</span><div><h3>${esc(o.destination)}</h3>
+    <div class="facts"><span>${esc(o.window.label)}</span><span>${esc(o.tierLabel)}</span><span>via ${esc(o.gateway)}</span></div></div></div>
+    <div class="price">${o.costMin === o.costMax ? k(o.costMin) : `${k(o.costMin)|–${k(o.costMax)}`} <span class="hint" style="font-size:1rem">per person, estimated</span></div>
+    <div class="chips" style="margin-top:6px">${o.weekend ? `<span class="tag">Weekend prices</span>` : `<span class="tag">Weekday prices · needs leave</span>`}${o.limited ? `<span class="tag">Limited stay data</span>` : ""}</div>
+    <ul class="people">${o.people.map((p) => `<li><span>${esc(p.name)}</span><span class="l ${p.label}">${p.label}</span><span>${esc(p.reasons.join("; ")) || "—"}</span></li>`).join("")}</ul>
+    ${extra}</article>`;
+}
+
+function renderResult(result, opts = {}) {
+  if (!result.options.length) return `<div class="nextstop">${van({ bags: [], cls: "stuck", label: "A van stuck by the road" })}</div><div class="note"><b>The van's stuck: no option works for everyone yet.</b> ${esc(result.blocker || "")}</div>`;
+  return `${result.basedOn < result.of ? `<div class="note">Based on ${result.basedOn} of ${result.of} people. The others' answers weren't in when options were published.</div>` : ""}
+  ${renderChart(result, opts.decisionId)}
+  <p class="hint">${esc(result.why)}${result.excluded ? " " + esc(result.excluded) : ""}</p>
+  ${result.options.map((o, i) => renderOption(o, i, opts.extra ? opts.extra(o) : "")).join("")}`;
+}
+
+// ─── Demo ───────────────────────────────────────────────
+async function demo() {
+  await withLoader("load", async () => {}, 900);
+  const t = demoTrip();
+  const r = rank(t, t.participants);
+  app.innerHTML = `${brand}<h1>${esc(t.name)}</h1>
+  <p class="lede">Five sample people in Bengaluru, Delhi, Mumbai, Hyderabad and Kolkata, with different budgets, dates and hard no's. This is what the group sees.</p>
+  <div class="note">Sample answers only. <a href="/">Start your own trip</a>.</div>
+  <section class="enter"><h2>Your three options</h2>${renderResult(r)}</section>${footer}`;
+}
+
+// ─── Trip page ──────────────────────────────────────────
+let T = null;
+const adminKey = () => qs.get("k") || store.get(`admin:${qs.get("t")}`);
+
+async function loadTrip() {
+  const id = qs.get("t"), key = adminKey();
+  const { r, j } = await withLoader("load", async () => {
+    const r = await fetch(`/api/trip?id=${encodeURIComponent(id)}${key ? `&k=${encodeURIComponent(key)}` : ""}`);
+    return { r, j: await r.json().catch(() => ({ error: "Couldn't load this trip." })) };
+  }, 900);
+  if (!r.ok) { app.innerHTML = `${brand}<h1>Trip not found</h1><p>${esc(j.error)}</p><a class="btn" href="/">Start a new trip</a>`; return; }
+  T = j; if (T.isAdmin && qs.get("k")) store.set(`admin:${T.id}`, qs.get("k"));
+  renderTrip();
+}
+
+function statusBlock() {
+  const done = T.participants.filter((p) => p.submitted).length, n = T.participants.length;
+  const dl = T.deadline ? new Date(T.deadline + "T23:59:59") : null;
+  const days = dl ? Math.ceil((dl - Date.now()) / 864e5) : null;
+  const when = dl ? (days > 1 ? `Answers due in ${days} days` : days === 1 ? "Answers due today" : "Answer deadline has passed") : "";
+  return `<div class="status"><b>${done} of ${n} answered</b><span class="hint">${when}</span></div>
+  <div class="bar"><span style="width:${(done / n) * 100}%"></span></div>
+  <div class="status">${T.participants.map((p) => `<span class="who"><span class="dot ${p.submitted ? "on" : ""}" aria-hidden="true"></span>${esc(p.name)}<span class="sr" style="position:absolute;left:-9999px">${p.submitted ? " has answered" : " hasn't answered"}</span></span>`).join("")}</div>`;
+}
+
+function shareBlock() {
+  const url = `${location.origin}/?t=${T.id}`;
+  const msg = `Let's finally decide the trip. Add your answers here, takes 5 minutes: ${url}`;
+  return `<div class="sheet links">
+    <h3>Share with the group</h3>
+    <p class="hint">Everyone uses this same link and picks their own name.</p>
+    <input type="text" readonly value="${url}" onclick="this.select()">
+    <div class="actions"><a class="btn signal" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Send on WhatsApp</a>
+    <button class="btn ghost" data-copy="${url}">Copy link</button></div>
+    ${T.isAdmin ? `<p class="hint" style="margin-top:14px">Your organiser link is this page's address. Keep it to yourself: it's the only way to publish options and lock the decision.</p>` : ""}
+  </div>`;
+}
+
+let lastStatus = null, seenPacked = null, quipTimer = null;
+function rackVan() {
+  const packed = T.participants.filter((p) => p.submitted).map((p) => p.name);
+  const bags = T.participants.map((p) => ({ name: p.name, on: p.submitted, fresh: p.submitted && (!seenPacked || !seenPacked.has(p.name)) }));
+  seenPacked = new Set(packed);
+  return van({ bags, moving: T.status === "decided", label: `Roof rack: ${packed.length} of ${T.participants.length} bags loaded` });
+}
+function renderTrip() {
+  const me = store.get(`me:${T.id}`);
+  const statusChanged = lastStatus !== null && lastStatus !== T.status;
+  const firstLoad = lastStatus === null;
+  const enter = firstLoad || statusChanged;
+  let body = "";
+  if (T.status === "decided") body = decidedView();
+  else if (T.status === "voting") body = votingView(me);
+  else body = collectingView(me);
+  app.innerHTML = `${brand}<h1>${esc(T.name)}</h1>
+    <p class="hint">${T.nights} nights · ${T.participants.length} people</p>
+    ${T.status === "collecting" ? `<div class="rack"><div>${rackVan()}</div><div>${statusBlock()}</div></div>` : ""}
+    ${T.storage === "memory" ? `<div class="note">Storage isn't connected on this deployment, so answers may disappear. The organiser should connect Redis storage in Vercel.</div>` : ""}
+    ${body}
+    ${T.isAdmin ? adminView() : T.status !== "collecting" ? `<section><details><summary class="hint">History</summary><ol class="history">${T.history.map((h) => `<li>${esc(new Date(h.at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }))}: ${esc(h.event)}</li>`).join("")}</ol></details></section>` : ""}
+    ${(T.isAdmin || qs.get("new")) && T.status === "collecting" ? `<section>${shareBlock()}</section>` : ""}
+    ${footer}`;
+  if (enter) app.querySelectorAll("section").forEach((s) => s.classList.add("enter"));
+  if (T.status !== "collecting") seenPacked = new Set(T.participants.filter((p) => p.submitted).map((p) => p.name));
+  if (statusChanged && T.status === "voting") confetti({ n: 60 });
+  if (T.status === "decided" && (statusChanged || firstLoad)) setTimeout(() => confetti({ n: 140, spread: 1.3 }), firstLoad ? 200 : 500);
+  lastStatus = T.status;
+  bind();
+  startQuips();
+}
+function startQuips() {
+  clearInterval(quipTimer);
+  const q = $(".quip"); if (!q) return;
+  let i = Math.floor(Math.random() * NUDGES.length); q.textContent = NUDGES[i];
+  if (reduceMotion()) return;
+  quipTimer = setInterval(() => { if (!document.body.contains(q)) return clearInterval(quipTimer); i = (i + 1) % NUDGES.length; q.classList.remove("swap"); void q.offsetWidth; q.classList.add("swap"); q.textContent = NUDGES[i]; }, 4200);
+}
+
+function nameChips(me, attr) {
+  return `<div class="chips" role="group" aria-label="Your name">${T.participants.map((p) => `<button class="chip" ${attr}="${esc(p.name)}" aria-pressed="${p.name === me}">${esc(p.name)}${p.submitted && T.status === "collecting" ? " ✓" : ""}</button>`).join("")}</div>`;
+}
+
+function collectingView(me) {
+  const mine = T.participants.find((p) => p.name === me);
+  const pending = T.participants.filter((p) => !p.submitted).map((p) => p.name);
+  const nh = nudgeHeadline(pending, me, !!mine?.submitted);
+  return `<div class="nudge" role="note"><h2>${pending.length && !mine?.submitted ? `<span class="wag" aria-hidden="true">👉</span> ` : ""}${esc(nh.title)}</h2><p>${esc(nh.body)}</p><p class="quip" aria-live="off"></p></div>
+  <section><h2>Who are you?</h2>${nameChips(me, "data-me")}</section>
+  ${me ? `<section>${mine?.submitted ? `<div class="note">You've answered, ${esc(me)}. You can change your answers until the options are out.</div>` : ""}${formView(me)}</section>` : ""}`;
+}
+
+function formView(me) {
+  const months = {};
+  for (const w of T.windows) { const m = new Date(w.start + "T00:00:00Z").toLocaleString("en-IN", { month: "long", timeZone: "UTC" }); (months[m] ||= []).push(w); }
+  return `<form class="sheet" id="pf" novalidate>
+    <div class="packing" aria-live="polite"><div class="msg" id="packmsg">Your bag is empty</div><div class="track"><div class="fill" id="packfill" style="width:0%"></div><span class="bagicon" id="packicon" style="left:0%" aria-hidden="true">🧳</span></div></div>
+    <h2>${esc(me)}'s answers</h2>
+    <p class="hint">Your budget and hard no's stay private. Everyone else only sees how well each option fits you.</p>
+    <label for="home">Where you'll travel from</label>
+    <select id="home" required><option value="">Pick a city</option>${ORIGINS.map((o) => `<option>${o}</option>`).join("")}</select>
+    <label>Total budget per person <span class="hint">· travel, stay and spending, all in</span></label>
+    <div class="row"><div><span class="hint">Comfortable</span><input id="comfort" type="number" inputmode="numeric" min="0" step="500" placeholder="e.g. 20000"></div>
+    <div><span class="hint">Absolute maximum</span><input id="max" type="number" inputmode="numeric" min="0" step="500" placeholder="e.g. 28000"></div></div>
+    <label>When you're free <span class="hint">· tick every window that works</span></label>
+    ${Object.entries(months).map(([m, ws]) => `<div class="month">${m}</div>${ws.map((w) => `<label class="win"><input type="checkbox" name="win" value="${w.id}">${esc(w.label)}<span class="k">${w.kind === "weekend" ? "Weekend" : "Weekday · needs leave"}</span></label>`).join("")}`).join("")}
+    <label>What kind of trip</label>
+    ${TRIP_TYPES.map((t) => `<div class="typerow"><span>${TYPE_LABEL[t]}</span><div class="seg" data-type="${t}">${["Skip", "Okay", "Love"].map((l, v) => `<button type="button" data-v="${v}" aria-pressed="${v === 1}">${l}</button>`).join("")}</div></div>`).join("")}
+    <label for="tier">Where you'd like to stay</label>
+    <select id="tier">${TIERS.map((t) => `<option value="${t}" ${t === "mid" ? "selected" : ""}>${TIER_LABEL[t]}</option>`).join("")}</select>
+    <label>Hard no's <span class="hint">· anything here rules an option out completely</span></label>
+    ${Object.entries(HARD_NOS).map(([key, l]) => `<label class="check"><input type="checkbox" name="no" value="${key}">${l}</label>`).join("")}
+    <label>Places you won't go</label>
+    <div class="chips" id="ex">${Object.entries(DESTINATIONS).map(([key, d]) => `<button type="button" class="chip" data-ex="${key}" aria-pressed="false">${esc(d.name)}</button>`).join("")}</div>
+    <p class="err" id="err"></p>
+    <button class="btn signal" type="submit">Send my answers</button>
+  </form>`;
+}
+
+function votingView(me) {
+  const res = T.snapshot.result;
+  const myVote = T.participants.find((p) => p.name === me)?.voted;
+  const voted = T.participants.filter((p) => p.voted).length;
+  const extra = (o) => `<div class="votes">${(T.tally[o.id] || []).length} vote${(T.tally[o.id] || []).length === 1 ? "" : "s"}${(T.tally[o.id] || []).length ? ": " + esc(T.tally[o.id].join(", ")) : ""}</div>
+    ${me && res.options.length ? `<div class="actions"><button class="btn ${myVote === o.id ? "signal" : "ghost"}" data-vote="${o.id}">${myVote === o.id ? "Your vote" : `Vote for ${esc(o.destination)}`}</button></div>` : ""}`;
+  return `<section><h2>Your three options</h2>
+    <p class="hint">${voted} of ${T.participants.length} have voted. Pick your name, then vote for one.</p>
+    ${nameChips(me, "data-me")}
+    ${renderResult(res, { extra })}</section>`;
+}
+
+function decidedView() {
+  const res = T.snapshot.result;
+  const o = res.options.find((x) => x.id === T.decision.optionId);
+  const d = new Date(T.decision.lockedAt).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" });
+  return `<section><div class="stamp">Chart prepared<small>Decided ${esc(d)}</small></div>
+    <div class="nextstop">${van({ bags: T.participants.map((p) => ({ on: true, name: p.name })), moving: true, label: `Van heading to ${o.destination}` })}</div>
+    <h2 style="margin-top:6px">Next stop: ${esc(o.destination)}, ${esc(o.window.label)}</h2>
+    <p class="lede">${esc(o.tierLabel)} · about ${o.costMin === o.costMax ? k(o.costMin) : `${k(o.costMin)}–${k(o.costMax)}`} per person. Next step: book it.</p>
+    ${renderChart(res, o.id)}
+    ${renderOption(o, res.options.indexOf(o))}</section>`;
+}
+
+function adminView() {
+  const done = T.participants.filter((p) => p.submitted).length, n = T.participants.length;
+  let ctrl = "";
+  if (T.status === "collecting") ctrl = `<p>Options publish by themselves when all ${n} have answered. Publishing now closes answers for everyone.</p>
+    <button class="btn" data-admin="publish" ${done ? "" : "disabled"}>Publish options now (${done} of ${n})</button>`;
+  if (T.status === "voting" && T.snapshot.result.options.length) {
+    const lead = [...T.snapshot.result.options].sort((a, b) => (T.tally[b.id]?.length || 0) - (T.tally[a.id]?.length || 0))[0];
+    ctrl = `<label for="lockopt">Lock the decision</label><select id="lockopt">${T.snapshot.result.options.map((o) => `<option value="${o.id}" ${o.id === lead.id ? "selected" : ""}>${esc(o.destination)} · ${T.tally[o.id]?.length || 0} votes</option>`).join("")}</select>
+      <div class="actions"><button class="btn signal" data-admin="lock">Lock decision</button><button class="btn ghost" data-admin="reopen">Reopen answers</button></div>`;
+  } else if (T.status === "voting") ctrl = `<button class="btn ghost" data-admin="reopen">Reopen answers so people can loosen constraints</button>`;
+  if (T.status === "decided") ctrl = `<p>Unlocking is recorded in the history everyone can see.</p><button class="btn ghost" data-admin="unlock">Unlock decision</button>`;
+  return `<section class="sheet"><h3>Organiser controls</h3>${ctrl}<p class="err" id="aerr"></p>
+    <details style="margin-top:10px"><summary class="hint">History</summary><ol class="history">${T.history.map((h) => `<li>${esc(new Date(h.at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }))}: ${esc(h.event)}</li>`).join("")}</ol></details></section>`;
+}
+
+function prefill(f, p) {
+  $("#home").value = p.home || ""; $("#comfort").value = p.comfort || ""; $("#max").value = p.max || ""; $("#tier").value = p.tier || "mid";
+  f.querySelectorAll("input[name=win]").forEach((i) => i.checked = (p.windows || []).includes(i.value));
+  f.querySelectorAll("input[name=no]").forEach((i) => i.checked = (p.hardNos || []).includes(i.value));
+  f.querySelectorAll("[data-ex]").forEach((b) => b.setAttribute("aria-pressed", (p.excludeDest || []).includes(b.dataset.ex)));
+  f.querySelectorAll(".seg").forEach((s) => s.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", Number(b.dataset.v) === (p.types?.[s.dataset.type] ?? 1))));
+}
+
+function bind() {
+  app.querySelectorAll("[data-me]").forEach((b) => b.onclick = () => { store.set(`me:${T.id}`, b.dataset.me); renderTrip(); });
+  app.querySelectorAll("[data-copy]").forEach((b) => b.onclick = async () => { try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = "Copied"; } catch { b.textContent = "Select the link above to copy"; } });
+  app.querySelectorAll(".seg").forEach((seg) => seg.onclick = (e) => { const b = e.target.closest("button"); if (!b) return; seg.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b)); });
+  app.querySelectorAll("[data-ex]").forEach((b) => b.onclick = () => b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") !== "true"));
+  app.querySelectorAll("[data-vote]").forEach((b) => b.onclick = async () => {
+    const box = b.getBoundingClientRect();
+    try { T = await api({ action: "vote", id: T.id, person: store.get(`me:${T.id}`), optionId: b.dataset.vote }, null); renderTrip();
+      const nb = app.querySelector(`[data-vote="${b.dataset.vote}"]`); nb?.classList.add("voted"); confetti({ x: box.left + box.width / 2, y: box.top, n: 36, spread: .6 });
+    } catch (e) { alert(e.message); }
+  });
+  app.querySelectorAll("[data-admin]").forEach((b) => b.onclick = async () => {
+    const action = b.dataset.admin;
+    if (action === "publish" && T.participants.some((p) => !p.submitted) && !confirm("Not everyone has answered. Publish anyway? Their preferences won't count.")) return;
+    b.disabled = true;
+    try { T = await api({ action, id: T.id, k: adminKey(), optionId: $("#lockopt")?.value }); renderTrip(); window.scrollTo({ top: 0 }); } catch (e) { $("#aerr").textContent = e.message; b.disabled = false; }
+  });
+  const f = $("#pf");
+  if (f) {
+    const pack = () => {
+      const parts = [!!$("#home").value, Number($("#comfort").value) > 0, Number($("#max").value) > 0, !!f.querySelector("input[name=win]:checked"),
+        [...f.querySelectorAll(".seg")].some((sg) => sg.querySelector('[aria-pressed="true"]').dataset.v !== "1")];
+      const pct = Math.round((parts.filter(Boolean).length / parts.length) * 100);
+      const msgs = [[100, "Bag packed. Hit send, you legend."], [80, "Almost zipped…"], [50, "Halfway packed. Don't stop now."], [20, "Socks are in. Keep going."], [0, "Your bag is empty"]];
+      $("#packfill").style.width = pct + "%"; $("#packicon").style.left = pct + "%";
+      $("#packmsg").textContent = `${msgs.find(([m]) => pct >= m)[1]} · ${pct}%`;
+    };
+    f.addEventListener("input", pack); f.addEventListener("change", pack); f.addEventListener("click", () => setTimeout(pack));
+    setTimeout(pack);
+  }
+  if (f) { try { const saved = JSON.parse(store.get(`prefs:${T.id}:${store.get(`me:${T.id}`)}`) || "null"); if (saved) prefill(f, saved); } catch {} }
+  if (f) f.onsubmit = async (e) => {
+    e.preventDefault();
+    const types = {}; f.querySelectorAll(".seg").forEach((s) => types[s.dataset.type] = Number(s.querySelector('[aria-pressed="true"]').dataset.v));
+    const prefs = {
+      home: $("#home").value, comfort: Number($("#comfort").value), max: Number($("#max").value) || Number($("#comfort").value),
+      windows: [...f.querySelectorAll('input[name=win]:checked')].map((i) => i.value), types, tier: $("#tier").value,
+      hardNos: [...f.querySelectorAll('input[name=no]:checked')].map((i) => i.value),
+      excludeDest: [...f.querySelectorAll('[data-ex][aria-pressed="true"]')].map((b) => b.dataset.ex),
+    };
+    const btn = f.querySelector("button[type=submit]"); btn.disabled = true; $("#err").textContent = "";
+    try { T = await api({ action: "submit", id: T.id, person: store.get(`me:${T.id}`), prefs }); store.set(`prefs:${T.id}:${store.get(`me:${T.id}`)}`, JSON.stringify(prefs)); renderTrip(); window.scrollTo({ top: 0, behavior: reduceMotion() ? "auto" : "smooth" }); setTimeout(() => confetti({ y: 160, n: 80 }), 350); }
+    catch (err) { $("#err").textContent = err.message; btn.disabled = false; }
+  };
+}
+
+if (qs.get("demo")) demo(); else if (qs.get("t")) loadTrip().catch(() => { app.innerHTML = `${brand}<h1>Couldn't load this trip</h1><p>Check your connection and refresh.</p>`; }); else home();
+</script>
+</body>
+</html>
